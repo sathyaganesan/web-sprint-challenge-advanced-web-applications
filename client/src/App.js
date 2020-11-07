@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import BubblePage from './components/BubblePage';
 import Login from "./components/Login";
 import { PrivateRoute } from './components/PrivateRoute';
-import "./Style.sass";
+import "./Style.scss";
 
 function App() {
   return (
