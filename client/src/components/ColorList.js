@@ -29,17 +29,17 @@ const ColorList = ({ colors, updateColors }) => {
       .then((res) => {
         updateColors(res.data);
         push('/bubblepage');
-        console.log("PUT REQUEST", res.data);
+        console.log("PUT REQUEST", res.data.colors);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const deleteColor = color => {
+  const deleteColor = (color) => {
     // make a delete request to delete this color
     axios
-      .delete(`http://localhost:5000/api/colors/${params.id}`)
+      .delete(`http://localhost:5000/api/colors/${color}`)
       .then((res) => {
         push('./bubblepage');
         console.log("DELETE REQUEST", res.data);

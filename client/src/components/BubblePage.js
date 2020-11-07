@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
@@ -14,7 +13,7 @@ const BubblePage = () => {
       .get(`/colors`)
       .then((res) => {
         setColorList(res.data);
-        console.log(res.data);
+        console.log("GET REQUEST", res.data);
       })
       .catch((err) => {
         console.log(err);
