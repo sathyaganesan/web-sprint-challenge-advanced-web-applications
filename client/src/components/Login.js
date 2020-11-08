@@ -19,7 +19,7 @@ const Login = (props) => {
 
   const submitChange = (e) => {
     console.log("SUBMIT CLICK");
-    e.prevenDefault();
+    e.preventDefault();
     axios
       .post(`http://localhost:5000/api/login`, {username: loginUser.username, password: loginUser.password})
       .then((res) => {

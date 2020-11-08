@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useHistory, useParams} from 'react-router-dom';
+import { axiosWithAuth } from "../util/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -8,11 +8,12 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log("Props from Bubble Page",colors);
+  console.log("Props from Bubble Page", colors);
+  
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
-  const { push } = useHistory();
-  const params = useParams();
+  const history = useHistory();
+  const {id} = useParams();
 
   const editColor = color => {
     setEditing(true);
@@ -24,12 +25,12 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
-    axios
-      .put(`http://localhost:5000/api/colors/${params.id}`, colors)
+    axiosWithAuth()
+      .put(`http://localhost:5000/api/colors/${id}`, colors)
       .then((res) => {
-        updateColors(res.data);
-        push('/bubblepage');
-        console.log("PUT REQUEST", res.data);
+        console.log("PUT REQUEST", res);
+        updateColors(res);
+        history.push('/bubblepage');
       })
       .catch((err) => {
         console.log(err);
@@ -38,11 +39,11 @@ const ColorList = ({ colors, updateColors }) => {
 
   const deleteColor = (color) => {
     // make a delete request to delete this color
-    axios
-      .delete(`http://localhost:5000/api/colors/${color}`)
+    axiosWithAuth()
+      .delete(`http://localhost:5000/api/colors/${color.id}`)
       .then((res) => {
-        push('./bubblepage');
-        console.log("DELETE REQUEST", res.data);
+        console.log("DELETE REQUEST", res);
+        history.push('/bubblepage');
       })
       .catch((err) => {
         console.log(err);
@@ -88,10 +89,7 @@ const ColorList = ({ colors, updateColors }) => {
             hex code:
             <input
               onChange={e =>
-                setColorToEdit({
-                  ...colorToEdit,
-                  code: { hex: e.target.value }
-                })
+                setColorToEdit({...colorToEdit, code: { hex: e.target.value }})
               }
               value={colorToEdit.code.hex}
             />
