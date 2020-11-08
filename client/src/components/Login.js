@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
 
-  const { push } = useHistory();
+  console.log("Props from LOGIN", props);
+
   const [loginUser, setLoginUser] = useState([
     {
       username: "",
@@ -18,13 +18,14 @@ const Login = () => {
   };
 
   const submitChange = (e) => {
+    console.log("SUBMIT CLICK");
     e.prevenDefault();
     axios
-      .post(`http://localhost:5000/api/login`, { username: loginUser.username, pasword: loginUser.password })
+      .post(`http://localhost:5000/api/login`, {username: loginUser.username, password: loginUser.password})
       .then((res) => {
-        localStorage.setItem('token', res.data.payload);
-        push('./bubblepage');
         console.log('LOGIN POST REQUEST', res);
+        localStorage.setItem('token', res.data.payload);
+        props.history.push('/bubblepage');
       })
       .catch((err) => {
         console.log(err);

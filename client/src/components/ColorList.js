@@ -8,7 +8,7 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(colors);
+  console.log("Props from Bubble Page",colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
   const { push } = useHistory();
@@ -29,7 +29,7 @@ const ColorList = ({ colors, updateColors }) => {
       .then((res) => {
         updateColors(res.data);
         push('/bubblepage');
-        console.log("PUT REQUEST", res.data.colors);
+        console.log("PUT REQUEST", res.data);
       })
       .catch((err) => {
         console.log(err);
