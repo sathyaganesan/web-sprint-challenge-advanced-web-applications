@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 import BubblePage from "./BubblePage";
 import mockFetchColor from '../api/mockFetchColor';
+import '@testing-library/jest-dom/extend-expect'
 
 // mock data
 
@@ -55,43 +56,21 @@ const colors = [
       hex: "#dd9a99"
     },
     id: 7
-  },
-  {
-    color: "softyellow",
-    code: {
-      hex: "#dcdd99"
-    },
-    id: 8
-  },
-  {
-    color: "blanchedalmond",
-    code: {
-      hex: "#ffebcd"
-    },
-    id: 9
-  },
-  {
-    color: "blue",
-    code: {
-      hex: "#6093ca"
-    },
-    id: 10
-  },
-  {
-    color: "blueviolet",
-    code: {
-      hex: "#8a2be2"
-    },
-    id: 11
   }
+  
 ];
 
 jest.mock('../api/mockFetchColor');
 
-mockFetchColor.mockResolvedValue([colors]);
 
-test("Fetches data and renders the bubbles", () => {
-  render(<BubblePage />)
+test("Fetches data and renders the bubbles", async () => {
+  mockFetchColor.mockResolvedValue([colors]);
+
+ const {getByText} = render(<BubblePage />);
   
-  // await waitFor(() => screen.getByText())
+  await waitFor(() => getByText(/colors/i));
+  userEvent.screen(/colors/i);
+
+  const fetchingColor = screen.getByText(/colors/i);
+  userEvent.screen(fetchingColor);
 });
