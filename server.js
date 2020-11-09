@@ -101,7 +101,9 @@ function authenticator(req, res, next) {
 }
 
 app.post("/api/login", (req, res) => {
+  console.log('LOGIN REQ = ', req);
   const { username, password } = req.body;
+  console.log("RECEIVED USERNAME & PASSWORD", username, password );
   if (username === "Lambda School" && password === "i<3Lambd4") {
     req.loggedIn = true;
     setTimeout(() => {
